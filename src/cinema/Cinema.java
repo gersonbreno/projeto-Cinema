@@ -52,7 +52,7 @@ public class Cinema {
 
 Filme fil = new Filme();
 
-       //System.out.println(filme);
+     
        
       do {
                try {
@@ -65,9 +65,9 @@ Filme fil = new Filme();
             op = ler.nextInt();
             switch (op) {
                 case 1:
-                    //usar um do whilhe aqui
+                    
 
-                    //varivel de admintrativo
+                    
                     String nome = null,
                      genero = null,
                      duracao = null,

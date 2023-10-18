@@ -17,12 +17,12 @@ public class Cliente {
     private int cpf;
 
     public Cliente() {
-        this.nome = ""; // Ou inicialize com um nome padrão, se desejar
-        this.idade = 0; // Ou inicialize com uma idade padrão, se desejar
-        this.email = ""; // Ou inicialize com um email padrão, se desejar
+        this.nome = ""; 
+        this.idade = 0;
+        this.email = ""; 
       
-        this.telefone = 0; // Ou inicialize com um telefone padrão, se desejar
-        this.cpf = 0; // Ou inicialize com um CPF padrão, se desejar
+        this.telefone = 0; 
+        this.cpf = 0; 
     }
 
     public Cliente( String nome, int idade, String email,  int telefone, int cpf) {

@@ -27,7 +27,7 @@ public class GerenteCinema {
     public GerenteCinema() {
         lista = new ArrayList<Filme>();
         lista1 = new ArrayList<Cliente>();
-        // lista2 = new ArrayList<Ingresso>();
+      
     }
     static String url = "jdbc:postgresql://localhost/Cinema";
     static String user = "postgres";
@@ -38,13 +38,13 @@ public class GerenteCinema {
         PreparedStatement stmt = null;
 
         try {
-            // Carregue o driver JDBC para o seu banco de dados
+          
             Class.forName("org.postgresql.Driver");
 
-            // Estabeleça a conexão com o banco de dados
+      
             conn = DriverManager.getConnection("jdbc:postgresql://localhost/Cinema", "postgres", "123");
 
-            // Crie uma consulta SQL para atualizar os dados do filme no banco de dados
+           
             String sql = "UPDATE filme  SET nomefilme=?, genero=?, horas=?, codicoFilme=? WHERE codicoFilme=?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, filme.getNome());
@@ -53,12 +53,12 @@ public class GerenteCinema {
             stmt.setInt(4, filme.getCodico());
             stmt.setInt(5, filme.getCodico());
 
-            // Execute a atualização
+           
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
-            // Feche as conexões e recursos
+          
             try {
                 if (stmt != null) {
                     stmt.close();
@@ -77,13 +77,13 @@ public class GerenteCinema {
         PreparedStatement stmt = null;
 
         try {
-            // Carregue o driver JDBC do seu banco de dados (por exemplo, PostgreSQL)
+         
             Class.forName("org.postgresql.Driver");
 
-            // Estabeleça a conexão com o banco de dados
+           
             conn = DriverManager.getConnection("jdbc:postgresql://localhost/Cinema", "postgres", "123");
 
-            // Crie uma consulta SQL para atualizar os dados do cliente no banco de dados
+           
             String sql = "UPDATE cliente SET cpf=?, nome=?, idade=? WHERE cpf=?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, cliente.getCpf());
@@ -91,12 +91,12 @@ public class GerenteCinema {
             stmt.setInt(3, cliente.getIdade());
             stmt.setInt(4, cliente.getCpf());
 
-            // Execute a atualização
+           
             stmt.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
-            // Feche as conexões e recursos
+          
             try {
                 if (stmt != null) {
                     stmt.close();
@@ -118,23 +118,23 @@ public class GerenteCinema {
             }
         }
 
-        // Criar a conexão com o banco de dados
+       
         try ( Connection connection = DriverManager.getConnection(url, user, password)) {
-            // Definir a consulta SQL para inserção
+           
             String sql = "INSERT INTO filme (nomeFilme , genero,horas, codicoFilme) VALUES (?, ?, ?, ?)";
 
-            // Criar um PreparedStatement para evitar injeção de SQL
+            
             try ( PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, fi.getNome());
                 preparedStatement.setString(2, fi.getGenero());
                 preparedStatement.setString(3, fi.getDuracao());
                 preparedStatement.setInt(4, fi.getCodico());
-                // Executar a consulta de inserção
+              
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
                     System.out.println("Filme adicionado com sucesso ao banco de dados.");
-                    // Adicione o filme à lista após a inserção bem-sucedida
+                    
                     this.lista.add(fi);
                 } else {
                     System.out.println("Erro: Não foi possível adicionar o filme ao banco de dados.");
@@ -196,7 +196,7 @@ public class GerenteCinema {
     }
 
     public void carregarFilmes() throws java.sql.SQLException {
-        lista.clear(); // Limpa a lista antes de adicionar filmes
+        lista.clear(); 
         try ( Connection connection = DriverManager.getConnection(url, user, password)) {
             String sql = "SELECT nomeFilme , genero, horas, codicoFilme FROM filme";
 
@@ -224,7 +224,7 @@ public class GerenteCinema {
         for (Filme f : lista) {
 
             System.out.println(f);
-            lista.clear(); // Limpa a lista antes de adicionar filmes
+            lista.clear(); 
         }
     }
 
@@ -275,20 +275,8 @@ public class GerenteCinema {
         System.out.println("O Filme nao encontrado nao foi encontrado tente novamente");
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////
-    //area de cadastro do cliente
-    /*  public void CadastrarCliente(Cliente cl){
-        for (Cliente c : this.lista1) {
-            if (cl.getCpf() == c.getCpf()) {
-                System.out.println("Erro não e possivel cadastrar Cliente com dois CPF iguais");
-                return;
-            }
-        }
-        lista1.add(cl);
-        System.out.println("==============================================================");
-        System.out.println("Cadastro realizado com Sucesso");
-    }
-     */
+    
+  
     public void CadastrarCliente(Cliente cl) throws java.sql.SQLException {
         for (Cliente c : this.lista1) {
             if (cl.getCpf() == c.getCpf()) {
@@ -335,25 +323,25 @@ public class GerenteCinema {
 
     public void RemoverCliente(int cpf) throws java.sql.SQLException {
         try ( Connection connection = DriverManager.getConnection(url, user, password)) {
-            // Iniciar uma transação
+         
             connection.setAutoCommit(false);
 
             try {
-                // Remover registros de EmailCliente
+               
                 String sqlRemoveEmailCliente = "DELETE FROM EmailCliente WHERE cpf = ?";
                 try ( PreparedStatement preparedStatementEmailCliente = connection.prepareStatement(sqlRemoveEmailCliente)) {
                     preparedStatementEmailCliente.setInt(1, cpf);
                     preparedStatementEmailCliente.executeUpdate();
                 }
 
-                // Remover registros de Telefone
+                
                 String sqlRemoveTelefone = "DELETE FROM TelefoneCliente WHERE cpf = ?";
                 try ( PreparedStatement preparedStatementTelefone = connection.prepareStatement(sqlRemoveTelefone)) {
                     preparedStatementTelefone.setInt(1, cpf);
                     preparedStatementTelefone.executeUpdate();
                 }
 
-                // Remover registro de Cliente
+               
                 String sqlRemoveCliente = "DELETE FROM cliente WHERE cpf = ?";
                 try ( PreparedStatement preparedStatementCliente = connection.prepareStatement(sqlRemoveCliente)) {
                     preparedStatementCliente.setInt(1, cpf);
@@ -361,7 +349,7 @@ public class GerenteCinema {
 
                     if (rowsDeleted > 0) {
                         System.out.println("O Cliente foi removido com sucesso.");
-                        connection.commit(); // Confirmar a transação
+                        connection.commit(); 
                     } else {
                         System.out.println("CPF não encontrado. Tente novamente.");
                         connection.rollback(); // Reverter a transação
@@ -370,9 +358,9 @@ public class GerenteCinema {
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
                 System.err.println("Erro: Falha na remoção do cliente no banco de dados.");
-                connection.rollback(); // Reverter a transação em caso de erro
+                connection.rollback(); 
             } finally {
-                connection.setAutoCommit(true); // Restaurar o modo de auto commit
+                connection.setAutoCommit(true); 
             }
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
@@ -392,8 +380,7 @@ public class GerenteCinema {
                 preparedStatement.setLong(1, cpf);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
-                boolean clienteEncontrado = false; // Adicione esta variável
-
+                boolean clienteEncontrado = false; 
                 while (resultSet.next()) {
                     String nome = resultSet.getString("nome");
                     int idade = resultSet.getInt("idade");
@@ -406,10 +393,10 @@ public class GerenteCinema {
                     cliente.setEmail(email);
                     System.out.println("Cliente encontrado: " + cliente);
 
-                    clienteEncontrado = true; // Define como true quando o cliente é encontrado
+                    clienteEncontrado = true; 
                 }
 
-                if (!clienteEncontrado) { // Verifica se o cliente não foi encontrado
+                if (!clienteEncontrado) { 
                     System.out.println("O Cliente não foi encontrado. Tente novamente.");
                 }
             }
@@ -420,7 +407,7 @@ public class GerenteCinema {
     }
 
     public void carregarClientes() {
-        lista1.clear(); // Limpe a lista existente para carregar clientes atualizados.
+        lista1.clear();
 
         try ( Connection connection = DriverManager.getConnection(url, user, password)) {
             String sql = "SELECT c.cpf, c.nome, c.idade, e.email, t.telefone "
@@ -437,7 +424,7 @@ public class GerenteCinema {
                     String email = resultSet.getString("email");
 
                     Cliente cliente = new Cliente(nome, idade, email, telefone, cpf);
-                    lista1.add(cliente); // Adicione o cliente à lista.
+                    lista1.add(cliente); 
 
                 }
             }

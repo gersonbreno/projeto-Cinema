@@ -40,7 +40,7 @@ public class Ingresso {
     public String getHora() {
         return hora;
     }
-// Crie e inicialize o objeto Filme
+
 GerenteCinema gc = new GerenteCinema();
     public Ingresso() {
        lista2 = new ArrayList<>();
@@ -88,7 +88,7 @@ public void reservarIngressoPorCodigo(int id) {
         String senha = "123";
 
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            // Iniciar uma transação
+           
             connection.setAutoCommit(false);
 
             String consulta = "SELECT id, preco, reserva FROM ingresso WHERE id = ?";
@@ -111,7 +111,7 @@ public void reservarIngressoPorCodigo(int id) {
                     int rowsAffected = atualizacaoStatement.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        // Confirmar a transação
+                       
                         connection.commit();
 
                         reservado = true;
@@ -139,7 +139,7 @@ public void reservarIngressoPorCodigo(int id) {
     String senha = "123";
 
     try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-        // Iniciar uma transação
+        
         connection.setAutoCommit(false);
 
         String consulta = "SELECT * FROM ingresso WHERE id = ?";
@@ -160,7 +160,7 @@ public void reservarIngressoPorCodigo(int id) {
                 int rowsAffected = atualizacaoStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // Confirmar a transação
+                   
                     connection.commit();
                     reservado = false;
                     System.out.println("Reserva do ingresso com ID " + id + " cancelada com sucesso.");
@@ -183,7 +183,7 @@ public void comprarIngresso(int id) throws SQLException {
     carregarIngresso();
 
     try (Connection connection = DriverManager.getConnection(url, user, password)) {
-        // Defina a consulta SQL para recuperar informações do ingresso
+       
         String consultaSql = "SELECT * FROM Ingresso WHERE id = ?";
         
         try (PreparedStatement consultaStatement = connection.prepareStatement(consultaSql)) {
@@ -191,7 +191,7 @@ public void comprarIngresso(int id) throws SQLException {
             ResultSet resultSet = consultaStatement.executeQuery();
 
             if (resultSet.next()) {
-                int ingressoId = resultSet.getInt("id"); // Substitua "id" pelo nome correto da coluna na tabela
+                int ingressoId = resultSet.getInt("id"); 
                 float ingressoPreco = resultSet.getFloat("preco");
                 String dataCompra = resultSet.getString("data");
                String hora = resultSet.getString("hora");
@@ -221,7 +221,7 @@ public void comprarIngresso(int id) throws SQLException {
       
       public void gerarComprovante(int codigo) {
     try (Connection connection = DriverManager.getConnection(url, user, password)) {
-        // Defina a consulta SQL para recuperar informações do ingresso
+       
         String consultaSql = "SELECT * FROM Ingresso WHERE id = ?";
         
         try (PreparedStatement consultaStatement = connection.prepareStatement(consultaSql)) {
@@ -229,7 +229,7 @@ public void comprarIngresso(int id) throws SQLException {
             ResultSet resultSet = consultaStatement.executeQuery();
 
             if (resultSet.next()) {
-                int ingressoId = resultSet.getInt("id"); // Substitua "id" pelo nome correto da coluna na tabela
+                int ingressoId = resultSet.getInt("id"); 
                
                 float ingressoPreco = resultSet.getFloat("preco");
                 String dataCompra = resultSet.getString("data");
@@ -256,7 +256,7 @@ public void comprarIngresso(int id) throws SQLException {
 
 
 
-    // Método para remover um ingresso do banco de dados e do ArrayList
+   
    
 public void AdicionarIngresso(Ingresso in) {
     for (Ingresso i : this.lista2) {
@@ -266,24 +266,24 @@ public void AdicionarIngresso(Ingresso in) {
         }
     }
 
-    // Criar a conexão com o banco de dados
+    
     try (Connection connection = DriverManager.getConnection(url, user, password)) {
-        // Definir a consulta SQL para inserção
+       
         String sql = "INSERT INTO Ingresso(preco,  id, data, hora) VALUES (?, ?, ? , ?)";
         
-        // Criar um PreparedStatement para evitar injeção de SQL
+        
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setFloat(1, in.getPreco());
            
             preparedStatement.setInt(2, in.getId());
             preparedStatement.setString(3, in.date);
             preparedStatement.setString(4, in.hora);
-            // Executar a consulta de inserção
+           
             int rowsAffected = preparedStatement.executeUpdate();
             
             if (rowsAffected > 0) {
                 System.out.println("Ingresso adicionado com sucesso ao banco de dados.");
-                // Adicione o ingresso à lista após a inserção bem-sucedida
+              
                 this.lista2.add(in);
             } else {
                 System.out.println("Erro: Não foi possível adicionar o ingresso ao banco de dados.");
@@ -310,7 +310,7 @@ public void RemoverIngresso(int codico) throws java.sql.SQLException {
                     System.err.println("Erro: Falha ao remover ingresso do banco de dados.");
                 }
                 
-                lista2.remove(in); // Remove o filme da lista
+                lista2.remove(in); 
                 System.out.println("O ingresso foi removido com sucesso: " + in);
                 return;
             }
@@ -318,7 +318,7 @@ public void RemoverIngresso(int codico) throws java.sql.SQLException {
         System.out.println("id não encontrado. Tente novamente.");
     }
 public void carregarIngresso() throws java.sql.SQLException {
-     lista2.clear(); // Limpa a lista antes de adicionar filmes
+     lista2.clear(); 
     Set<Ingresso> ingressosSet = new HashSet<>();
 
     try (Connection connection = DriverManager.getConnection(url, user, password)) {
@@ -333,7 +333,7 @@ public void carregarIngresso() throws java.sql.SQLException {
                 String data = resultSet.getString("data");
                 boolean reservados = resultSet.getBoolean("reserva");
                  String hora = resultSet.getString("hora");
- lista2.clear(); // Limpa a lista antes de adicionar filmes
+ lista2.clear(); 
                 Ingresso ingresso = new Ingresso(preco,  data, id,reservados,hora);
                 ingressosSet.add(ingresso);
             }
